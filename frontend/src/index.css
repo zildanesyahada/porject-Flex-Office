@@ -6,6 +6,7 @@
   --color-primary: #296EB4;
   --color-primary-hover: #1F5490;
   --color-primary-soft: #E4EEF8;
+  --color-navy: #0F2540;
 
   --color-background: #F8F9FC;
   --color-surface: #FFFFFF;
@@ -20,6 +21,9 @@
   --color-warning-soft: #FBF1E1;
   --color-danger: #C4463B;
   --color-danger-soft: #FBEAE8;
+
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-pop: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 body {

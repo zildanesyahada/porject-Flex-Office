@@ -51,15 +51,16 @@ frontend/
 │   ├── components/
 │   │   ├── ui/                        ← KOMPONEN DASAR, generik, TIDAK tahu soal domain
 │   │   │   │                             (tidak boleh import dari features/). Dipakai di mana saja.
-│   │   │   ├── Button.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── PasswordInput.tsx      ← Input + toggle show/hide (dari refactor kemarin)
-│   │   │   ├── Badge.tsx              ← StatusBadge (success/warning/danger soft)
-│   │   │   ├── Card.tsx
-│   │   │   ├── Modal.tsx
-│   │   │   ├── Toast.tsx
-│   │   │   ├── Tabs.tsx
-│   │   │   ├── DatePicker.tsx
+│   │   │   ├── button.tsx             ← shadcn Button
+│   │   │   ├── input.tsx              ← shadcn Input
+│   │   │   ├── PasswordInput.tsx      ← Input + toggle show/hide (custom)
+│   │   │   ├── badge.tsx              ← shadcn Badge (StatusBadge)
+│   │   │   ├── card.tsx               ← shadcn Card
+│   │   │   ├── dialog.tsx             ← shadcn Dialog
+│   │   │   ├── sonner.tsx             ← shadcn Sonner (Toast)
+│   │   │   ├── tabs.tsx               ← shadcn Tabs
+│   │   │   ├── calendar.tsx           ← shadcn Calendar
+│   │   │   ├── Container.tsx          ← custom layout wrapper
 │   │   │   └── index.ts               ← re-export semua, supaya import jadi `from '@/components/ui'`
 │   │   │
 │   │   └── shared/                    ← KOMPONEN GABUNGAN lintas halaman, BOLEH tahu domain

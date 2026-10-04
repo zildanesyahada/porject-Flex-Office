@@ -47,7 +47,7 @@ Autentikasi & verifikasi email, katalog ruangan & gedung, booking dengan auto-co
 
 ### 2.4 Operating Environment
 - **SRS-NF-ENV-01:** Sistem berjalan sebagai aplikasi web, diakses melalui browser modern (Chrome, Firefox, Edge versi dua tahun terakhir).
-- **SRS-NF-ENV-02:** Target perangkat adalah **desktop dan laptop**. Tampilan mobile/tablet **tidak** menjadi target desain di MVP (berbeda dari asumsi awal di PRD — perlu diselaraskan jika PRD diperbarui).
+- **SRS-NF-ENV-02:** Target perangkat adalah **desktop dan laptop**. Tampilan mobile/tablet **tidak** menjadi target desain di MVP.
 - **SRS-NF-ENV-03:** Backend: Laravel (PHP) + MySQL. Frontend: React + Tailwind CSS + Framer Motion.
 - **SRS-NF-ENV-04:** Lingkungan pembayaran memakai **Midtrans Sandbox**, bukan produksi.
 

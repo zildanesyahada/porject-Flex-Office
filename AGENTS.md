@@ -45,6 +45,11 @@ Ikuti urutan di `README.md` bagian "Urutan Implementasi" — jangan mulai modul 
 - `backend/` — Laravel, pola Controller → Service → Repository (lihat `SYSTEM-DESIGN.md` §7)
 - `frontend/` — React, pola `pages/` + `features/<domain>/api.ts` untuk axios call per domain, komponen reusable di `components/ui/` (dasar) dan `components/shared/` (gabungan/cross-page)
 
+## Keputusan Final
+- **Library komponen:** shadcn/ui. Tampilan (warna, font, radius, spacing) mengikuti `design.md` §3-§8.
+- **Target device:** Desktop/laptop saja (min 1024px). Abaikan kata "mobile-first" di `PRD.md` bagian Lintas-fitur.
+- **Frontend alias:** `@` → `src`.
+
 ## Yang Belum Diputuskan (cek sebelum implementasi terkait)
 - Hosting backend final: Railway atau Render (`ARCHITECTURE.md` OQ-ARCH-2, terkait dukungan cron job)
 - Kasus user menolak persetujuan nonaktifkan ruangan (`PRD.md` OQ-C) — jangan implementasi F11 deactivation-forced sebelum ini jelas

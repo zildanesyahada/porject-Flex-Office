@@ -237,7 +237,7 @@ Tipe ruangan MVP: meeting room, coworking, ruang kerja, private office, event sp
 
 **Lintas-fitur**
 - Zona waktu WIB, mata uang IDR.
-- Halaman responsif (mobile-first, berbasis web).
+- Desktop/laptop saja (min 1024px).
 - Otorisasi sisi server untuk setiap akses booking, invoice, notifikasi.
 
 ---

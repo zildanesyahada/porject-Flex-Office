@@ -72,14 +72,11 @@ Korporat, tenang, "soft corporate" — bukan startup consumer yang playful, tapi
   - Modal/dropdown: `0 4px 16px rgba(16, 24, 40, 0.12)`
 
 ## 7. Component Approach
-**Custom build dari nol**, murni Tailwind CSS tanpa library komponen pihak ketiga. Konsekuensinya:
-- Setiap komponen interaktif (Dialog, Dropdown, Date Picker, Toast, Tabs) harus dibangun manual, termasuk accessibility (keyboard navigation, focus trap, ARIA attributes) dan state management-nya (open/closed, disabled, loading).
-- Simpan komponen dasar di `frontend/src/components/ui/` (lihat struktur folder di `AGENTS.md`), satu file per komponen (`Button.tsx`, `Input.tsx`, `Badge.tsx`, dst.), supaya reusable dan konsisten dengan token di dokumen ini.
-- Untuk komponen yang butuh logic rumit (Date Picker, Toast queue), pertimbangkan library headless yang tidak membawa styling sendiri (mis. Radix Primitives) supaya accessibility tetap terjamin tanpa mengorbankan kontrol visual penuh — beda dari shadcn/ui karena kamu yang menulis markup dan class Tailwind-nya sendiri dari primitive tersebut, bukan copy komponen jadi.
+**shadcn/ui (komponen disalin ke components/ui/, di atas Radix) dengan token dari dokumen ini; tampilan tetap mengikuti §3-§8**. File komponen di components/ui/ memakai penamaan shadcn (huruf kecil: button.tsx, input.tsx). Komponen custom tetap PascalCase (Container.tsx). Semua di-re-export lewat components/ui/index.ts.
 
 **Setup awal:**
 - Import Plus Jakarta Sans lewat Google Fonts, set sebagai `font-sans` default di Tailwind config.
-- Definisikan token warna (§3) sebagai CSS variable atau langsung di `tailwind.config` `theme.extend.colors`, supaya dipakai konsisten lewat class Tailwind (`bg-primary`, `text-danger`, dll.) bukan hex ditulis manual di tiap komponen.
+- Definisikan token warna (§3) sebagai CSS variable atau langsung di blok `@theme` di src/index.css (Tailwind v4), supaya dipakai konsisten lewat class Tailwind (`bg-primary`, `text-danger`, dll.) bukan hex ditulis manual di tiap komponen.
 
 ## 8. Key Component Specs
 
