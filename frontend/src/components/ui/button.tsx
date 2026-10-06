@@ -19,7 +19,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           {
             "bg-primary text-white hover:bg-primary-hover h-10 px-4 py-2":
               variant === "default",
-            "border border-primary bg-transparent hover:bg-primary-soft h-10 px-4 py-2":
+            "border border-primary text-primary bg-transparent hover:bg-primary-soft h-10 px-4 py-2":
               variant === "outline",
             "hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2":
               variant === "ghost",

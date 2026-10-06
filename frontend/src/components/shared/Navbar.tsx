@@ -81,7 +81,7 @@ export function Navbar() {
               <Link to="/login">Log In</Link>
             </Button>
             <Button asChild size="sm">
-              <Link to="/register">Sign Up</Link>
+              <Link to="/register">Register</Link>
             </Button>
           </div>
         </Container>

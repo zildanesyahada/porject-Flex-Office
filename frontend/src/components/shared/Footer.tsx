@@ -32,7 +32,7 @@ export function Footer() {
     <footer className="bg-navy text-white/80">
       <Container className="grid grid-cols-[1.5fr_repeat(3,1fr)] gap-12 py-14">
         <div className="flex max-w-xs flex-col gap-3">
-          <img src="/images/logo.svg" alt="FlexOffice" className="h-8 w-fit brightness-0 invert" />
+          <img src="assets/images/logo.png" alt="FlexOffice" className="h-8 w-fit brightness-0 invert" />
           <p className="text-[13px] leading-relaxed">
             Book meeting rooms, coworking spaces, and private offices across two buildings.
           </p>

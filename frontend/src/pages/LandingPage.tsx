@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Armchair, CalendarCheck, LayoutGrid } from "lucide-react";
+import { Armchair, CalendarCheck, ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { Button, Container } from "@/components/ui";
 import { RoomCard } from "@/components/shared/RoomCard";
-import { CategoryGrid } from "@/components/shared/CategoryGrid";
 import { fetchRooms } from "@/features/rooms/api";
 import type { Room } from "@/types/room";
+import { cn } from "@/lib/utils";
 
 function Hero() {
   const stats = [
@@ -109,6 +109,138 @@ function WhyFlexOffice() {
   );
 }
 
+function SectionHeading({ title, highlight, subtitle }: { title: string; highlight: string; subtitle: string }) {
+  return (
+    <div className="mb-10">
+      <h2 className="text-3xl font-bold leading-tight">
+        {title} <span className="text-primary">{highlight}</span>
+      </h2>
+      <p className="mb-10 text-[15px] text-text-secondary">{subtitle}</p>
+    </div>
+  );
+}
+
+interface Category {
+  slug: string;
+  label: string;
+  description: string;
+}
+
+// TODO: data sementara. slug harus sama dengan slug room_types di backend.
+const categories: Category[] = [
+  { slug: "meeting-room", label: "Meeting", description: "For team meetings, workshops, and client sessions." },
+  { slug: "coworking", label: "Coworking", description: "Flexible shared desks in an open, lively work area." },
+  { slug: "workspace", label: "Workspace", description: "Your own dedicated desk in a quiet, shared work area." },
+  { slug: "private-office", label: "Private Office", description: "Your own enclosed office for individuals and teams." },
+  { slug: "event-space", label: "Event", description: "Spacious venues for events, trainings, and gatherings." },
+  { slug: "studio", label: "Studio", description: "Creative space for photo, video, and podcast shoots." },
+];
+
+const categoryImage = (slug: string) => `assets/images/categories/${slug}.jpg`;
+
+function CategoryCard({ category }: { category: Category }) {
+  return (
+    <Link
+      to={`/rooms?type=${category.slug}`}
+      className="group flex w-[calc((100%-48px)/3)] shrink-0 snap-start items-center gap-5 rounded-2xl border border-border bg-surface p-7 transition-colors hover:border-primary"
+    >
+      <div className="flex size-[120px] shrink-0 items-center justify-center rounded-xl bg-primary-soft">
+        <img
+          src={categoryImage(category.slug)}
+          alt=""
+          className="size-full object-contain transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+      <div className="min-w-0">
+        <h3 className="text-[15px] font-semibold uppercase tracking-[0.12em] text-text-primary">
+          {category.label}
+        </h3>
+        <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-text-secondary">
+          {category.description}
+        </p>
+      </div>
+    </Link>
+  );
+}
+
+function CarouselArrow({ direction, onClick }: { direction: "prev" | "next"; onClick: () => void }) {
+  const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      onClick={onClick}
+      aria-label={direction === "prev" ? "Previous categories" : "Next categories"}
+      className={cn(
+        "absolute top-1/2 z-10 size-10 -translate-y-1/2 rounded-full bg-surface p-0 shadow-pop",
+        direction === "prev" ? "-left-5" : "-right-5",
+      )}
+    >
+      <Icon className="size-5" aria-hidden />
+    </Button>
+  );
+}
+
+function CategoryCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [edge, setEdge] = useState({ start: true, end: true });
+
+  const updateEdge = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    setEdge({
+      start: el.scrollLeft <= 4,
+      end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4,
+    });
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(updateEdge);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [updateEdge]);
+
+  function scrollByPage(direction: 1 | -1) {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * el.clientWidth, behavior: "smooth" });
+  }
+
+  return (
+    <div className="relative">
+      <div
+        ref={trackRef}
+        onScroll={updateEdge}
+        className="flex snap-x snap-mandatory gap-6 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {categories.map((category) => (
+          <CategoryCard key={category.slug} category={category} />
+        ))}
+      </div>
+      {!edge.start && <CarouselArrow direction="prev" onClick={() => scrollByPage(-1)} />}
+      {!edge.end && <CarouselArrow direction="next" onClick={() => scrollByPage(1)} />}
+    </div>
+  );
+}
+
+function FindRightSpace() {
+  return (
+    <section className="py-12">
+      <Container>
+        <SectionHeading
+          title="Find the"
+          highlight="Right Space"
+          subtitle="Pick the type of space that fits how you work."
+        />
+        <CategoryCarousel />
+      </Container>
+    </section>
+  );
+}
+
 function PopularWorkspaces({ rooms }: { rooms: Room[] }) {
   const [featured, ...others] = rooms;
   if (!featured) return null;
@@ -116,13 +248,11 @@ function PopularWorkspaces({ rooms }: { rooms: Room[] }) {
   return (
     <section id="featured" className="py-12">
       <Container>
-        <h2 className="text-3xl font-bold leading-tight">
-          Popular <span className="text-primary">Workspaces</span>
-        </h2>
-        <p className="mb-10 text-[15px] text-text-secondary">
-          Explore our most popular spaces for work, meetings, and collaboration.
-        </p>
-
+        <SectionHeading
+          title="Popular"
+          highlight="Workspaces"
+          subtitle="Explore our most popular spaces for work, meetings, and collaboration."
+        />
         <div className="grid h-[436px] grid-cols-[minmax(0,1.42fr)_minmax(0,1fr)] gap-6">
           <RoomCard room={featured} variant="featured" className="h-full" />
           <div className="grid grid-cols-2 grid-rows-2 gap-4">
@@ -140,12 +270,19 @@ function CtaBanner() {
   return (
     <section className="pb-20">
       <Container>
-        <div className="flex flex-col items-center gap-5 rounded-2xl bg-navy px-8 py-14 text-center text-white">
-          <h2 className="text-[28px] font-bold">Ready to find your next workspace?</h2>
-          <p className="max-w-lg text-white/80">
-            Create an account, verify your email once, and book your first room today.
-          </p>
-          <Button asChild><Link to="/rooms">Browse all rooms</Link></Button>
+        <div className="relative rounded-2xl bg-ink px-8 py-14 text-center text-white overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,var(--color-primary)/35_0%,transparent_45%),radial-gradient(ellipse_at_top_right,var(--color-primary)/35_0%,transparent_45%)]" />
+          <div className="relative flex flex-col items-center gap-3 max-w-[28rem] mx-auto">
+            <h2 className="text-[28px] font-bold leading-tight">
+              Ready to find your next workspace? Getting Started
+            </h2>
+            <p className="text-white/75 leading-relaxed">
+              Create an account and book your first room today.
+            </p>
+            <Button asChild className="mt-7 bg-surface text-ink hover:bg-surface/90">
+              <Link to="/register">Register</Link>
+            </Button>
+          </div>
         </div>
       </Container>
     </section>
@@ -164,7 +301,7 @@ export default function LandingPage() {
       <Hero />
       <PopularWorkspaces rooms={rooms} />
       <WhyFlexOffice />
-      <CategoryGrid />
+      <FindRightSpace />
       <CtaBanner />
     </>
   );

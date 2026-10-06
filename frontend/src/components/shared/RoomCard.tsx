@@ -62,9 +62,6 @@ export function RoomCard({ room, variant = "default", className }: RoomCardProps
                 <span className="text-xs font-normal text-text-secondary">{unit}</span>
               </p>
             </div>
-            <Button asChild size="sm">
-              <Link to={detailPath}>View Detail</Link>
-            </Button>
           </div>
         </div>
       </div>
@@ -125,4 +122,4 @@ export function RoomCard({ room, variant = "default", className }: RoomCardProps
       </div>
     </Card>
   );
-}o
+}
